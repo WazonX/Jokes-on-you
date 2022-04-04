@@ -43,7 +43,7 @@ public class OscarGalaController : MonoBehaviour
     {
         CurrentProgress = Mathf.Clamp(CurrentProgress + deltaValue, 0, MaxProgress);
 
-        var percent = CurrentProgress / MaxProgress;
+        var percent = CurrentProgress / MaxProgress * 100;
         //Will gets angry and move forward
         if (deltaValue > 0)
         {
