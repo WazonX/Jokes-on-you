@@ -512,6 +512,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9041026089793081451, guid: 1af3001ecfe05d94eb2afd28ba032f9b, type: 3}
+      propertyPath: WalkSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041026089793081451, guid: 1af3001ecfe05d94eb2afd28ba032f9b, type: 3}
+      propertyPath: _spotTolerance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041026089793081451, guid: 1af3001ecfe05d94eb2afd28ba032f9b, type: 3}
+      propertyPath: DetectionMargin
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 9041026089793081749, guid: 1af3001ecfe05d94eb2afd28ba032f9b, type: 3}
       propertyPath: m_Name
       value: OscarGala

@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Positive:
   - Text: You look nice
-    Value: -5
-  - Text: You look nice
-    Value: -5
+    Value: -1
+  - Text: I like you
+    Value: -1
   Negative:
   - Text: I took a big crap today
-    Value: 5
+    Value: 1
   - Text: Jaba I love you, Gi Jane 2 can't wait to see it, alright?<br>That was a
       nice one!
-    Value: 100
+    Value: 7
   Neutral:
   - Text: The weather is nice huh?
     Value: 0

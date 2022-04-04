@@ -134,6 +134,6 @@ public class DialogController : MonoBehaviour
     void ButtonClicked(DialogItem item)
     {
         HideDialogues();
-        GalaController.SlapProgress(item.Value);
+        GalaController.PerformSteps(item.Value);
     }
 }
