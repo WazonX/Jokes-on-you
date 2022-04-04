@@ -1277,6 +1277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7287423619391974468}
   - component: {fileID: 3729558831976134206}
+  - component: {fileID: 1816535973225783846}
   m_Layer: 0
   m_Name: Chris
   m_TagString: Untagged
@@ -1319,6 +1320,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1816535973225783846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7956155780914624254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c2d276cea6ee394da127c4a8aa152cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Anim: {fileID: 3729558831976134206}
 --- !u!1 &8087876766714592322
 GameObject:
   m_ObjectHideFlags: 0

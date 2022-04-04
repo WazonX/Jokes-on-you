@@ -22,7 +22,7 @@ MonoBehaviour:
     Value: 1
   - Text: Jaba I love you, Gi Jane 2 can't wait to see it, alright?<br>That was a
       nice one!
-    Value: 7
+    Value: 10
   Neutral:
   - Text: The weather is nice huh?
     Value: 0

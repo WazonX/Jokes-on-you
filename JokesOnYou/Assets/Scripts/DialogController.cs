@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DialogController : MonoBehaviour
@@ -17,6 +18,11 @@ public class DialogController : MonoBehaviour
     List<int> AlreadyDrawedNeutralDialogues = new List<int>();
     List<int> ButtonIndexAlreadyDrawedThisRound = new List<int>();
     const int ButtonCount = 3;
+
+    [Header("EndGameScreen")]
+    [SerializeField] string ScoreText = "Was Smith took {0} steps to get to you";
+    [SerializeField] TextMeshProUGUI ScoreTextBox;
+    [SerializeField] CanvasGroup EndScreen;
 
 
     void Start()
@@ -117,6 +123,7 @@ public class DialogController : MonoBehaviour
         HideDialogues();
 
         //TODO:Show score and button to restart game
+        ShowScore(score);
     }
 
     void ShowDialogues()
@@ -136,4 +143,24 @@ public class DialogController : MonoBehaviour
         HideDialogues();
         GalaController.PerformSteps(item.Value);
     }
+
+    public void ShowScore(int score)
+    {
+        HideDialogues();
+        EndScreen.gameObject.SetActive(true);
+        ScoreTextBox.text = string.Format(ScoreText, score);
+        EndScreen.alpha = 1;
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+
 }

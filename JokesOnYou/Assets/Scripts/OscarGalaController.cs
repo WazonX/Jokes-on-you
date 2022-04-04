@@ -6,8 +6,8 @@ using UnityEngine.Events;
 public class OscarGalaController : MonoBehaviour
 {
     #region Properties
-    const float MaxProgress = 100f;
-    [Range(0f, 100f)]
+    const float MaxProgress = 1f;
+    [Range(0f, 1f)]
     public float CurrentProgress;
 
     //TODO:whats the score? time or points?
@@ -28,6 +28,8 @@ public class OscarGalaController : MonoBehaviour
     [SerializeField] Transform StartingSpot;
     [SerializeField] Transform StoppingSpot;
 
+    [SerializeField] ChrisController Chris;
+
     //when snapping to postion while animation playing might mess up Will rotation and position we use this to reset
     Quaternion _willInitialRotation;
 
@@ -37,9 +39,9 @@ public class OscarGalaController : MonoBehaviour
     public float SingleStepDuration = 0.515f;
 
     public float StopTimer;
-    float _rootMotionTolerance = 0.1f;
-    public float _spotTolerance = 0.1f;
-    public float _progressTolerance = 0.1f;
+    float _rootMotionTolerance = 0.025f;
+    public float _spotTolerance = 0.025f;
+    public float _progressTolerance = 0.025f;
 
     //Store last walk animation progress before pause, so we can resume to alternate steps left and right
     public float _lastWalkProgress;
@@ -55,6 +57,7 @@ public class OscarGalaController : MonoBehaviour
     {
         TotalDistance = Vector3.Distance(StartingSpot.position, StoppingSpot.position);
         _willInitialRotation = WillTransform.localRotation;
+        Chris.OnHitEnded.AddListener(OnHitEnded);
     }
 
     void Update()
@@ -90,9 +93,9 @@ public class OscarGalaController : MonoBehaviour
                 {
                     SetWill_Z(StoppingSpot.position);
                     ToggleWalking(false);
-                    CheckGameConditions();
 
-                    Debug.Log("Dont miss Chris");
+                    Debug.Log($"Dont miss Chris WillZ{WillTransform.position.z} StopZ:{StoppingSpot.position.z}");
+                    TriggetPunch();
                     return;
                 }
 
@@ -120,6 +123,7 @@ public class OscarGalaController : MonoBehaviour
         {
             Debug.Log($"Will get angry and move forward");
             //TODO: play random angry gesture and move will forward (also manage cameras and face)
+            Score += Mathf.FloorToInt(steps);
         }
         else if (steps < 0)
         {
@@ -161,10 +165,10 @@ public class OscarGalaController : MonoBehaviour
     void CheckGameConditions()
     {
         //TODO:on animation played
-        if (CurrentProgress >= MaxProgress - _progressTolerance)
+        if (CurrentProgress >= MaxProgress - _progressTolerance || WillTransform.position.z < StoppingSpot.position.z)
         {
+            TriggetPunch();
             Debug.Log($"Will reached the target. Current score {Score}.");
-            OnGameEnded.Invoke(Score);
         }
         else
         {
@@ -172,6 +176,16 @@ public class OscarGalaController : MonoBehaviour
             Debug.Log($"Chris speaks another dialog");
             OnNextRound.Invoke();
         }
+    }
+
+    void TriggetPunch()
+    {
+        WillAnim.SetTrigger(AnimationParameters.Punch);
+    }
+
+    void OnHitEnded()
+    {
+        OnGameEnded.Invoke(Score);
     }
 
     void Walk(float steps)

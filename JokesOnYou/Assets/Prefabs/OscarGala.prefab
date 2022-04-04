@@ -400,13 +400,22 @@ MonoBehaviour:
   WillBackCamera: {fileID: 0}
   StartingSpot: {fileID: 5027395261135811232}
   StoppingSpot: {fileID: 6605135985782466618}
+  Chris: {fileID: 2029916848094166338}
   TotalDistance: 0
+  IsWalking: 0
+  SingleStepDuration: 0.515
+  StopTimer: 0
+  _spotTolerance: 0.001
+  _progressTolerance: 0.05
+  _lastWalkProgress: 0
+  _movingForward: 1
   OnNextRound:
     m_PersistentCalls:
       m_Calls: []
   OnGameEnded:
     m_PersistentCalls:
       m_Calls: []
+  distanceToStopSpot: 0
 --- !u!1 &9041026090032460093
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,6 +827,17 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 3729558831976134206, guid: 1db8d27ee6e3cb8408c5a755ac8d19c8, type: 3}
   m_PrefabInstance: {fileID: 368757824272785252}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2029916848094166338 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1816535973225783846, guid: 1db8d27ee6e3cb8408c5a755ac8d19c8, type: 3}
+  m_PrefabInstance: {fileID: 368757824272785252}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c2d276cea6ee394da127c4a8aa152cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &874055643882582254
 PrefabInstance:
   m_ObjectHideFlags: 0
