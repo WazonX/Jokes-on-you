@@ -11,6 +11,9 @@ public class DialogController : MonoBehaviour
     [SerializeField] ChrisDialogButton[] DialogButtons;
     [SerializeField] OscarGalaController GalaController;
     [SerializeField] CanvasGroup MenuVisuals;
+    [SerializeField] AudioClip[] ChrisSounds;
+    [SerializeField] AudioClip[] WillSounds;
+    [SerializeField] AudioSource AudioSource;
 
 
     List<int> AlreadyDrawedPositiveDialogues = new List<int>();
@@ -18,6 +21,8 @@ public class DialogController : MonoBehaviour
     List<int> AlreadyDrawedNeutralDialogues = new List<int>();
     List<int> ButtonIndexAlreadyDrawedThisRound = new List<int>();
     const int ButtonCount = 3;
+
+    [SerializeField] TextMeshProUGUI CurrentScoreTextBox;
 
     [Header("EndGameScreen")]
     [SerializeField] string ScoreText = "Was Smith took {0} steps to get to you";
@@ -40,6 +45,7 @@ public class DialogController : MonoBehaviour
         //Hook to Gala Controller Events
         GalaController.OnNextRound.AddListener(GalaRequestedNextRound);
         GalaController.OnGameEnded.AddListener(GalaEnded);
+        GalaController.OnScoreChanged.AddListener(GalaScoreChanged);
 
         ShowDialogues();
         NextQuestion();
@@ -124,6 +130,10 @@ public class DialogController : MonoBehaviour
 
         //TODO:Show score and button to restart game
         ShowScore(score);
+    }
+    void GalaScoreChanged(int score)
+    {
+        CurrentScoreTextBox.text = score.ToString();
     }
 
     void ShowDialogues()

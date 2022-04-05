@@ -52,6 +52,7 @@ public class OscarGalaController : MonoBehaviour
 
     public UnityEvent OnNextRound;
     public UnityEvent<int> OnGameEnded;
+    public UnityEvent<int> OnScoreChanged;
 
     void Start()
     {
@@ -124,6 +125,7 @@ public class OscarGalaController : MonoBehaviour
             Debug.Log($"Will get angry and move forward");
             //TODO: play random angry gesture and move will forward (also manage cameras and face)
             Score += Mathf.FloorToInt(steps);
+            OnScoreChanged.Invoke(Score);
         }
         else if (steps < 0)
         {
