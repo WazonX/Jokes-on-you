@@ -8,9 +8,7 @@ using UnityEngine.UI;
 public class DialogController : MonoBehaviour
 {
     [SerializeField] DialogConfig DialogConfig;
-    [SerializeField] ChrisDialogButton[] DialogButtons;
     [SerializeField] OscarGalaController GalaController;
-    [SerializeField] FadeController MenuVisuals;
     [SerializeField] AudioClip[] ChrisSounds;
     [SerializeField] AudioClip[] WillSounds;
     [SerializeField] AudioSource AudioSource;
@@ -23,17 +21,39 @@ public class DialogController : MonoBehaviour
     const int ButtonCount = 3;
 
     [SerializeField] TextMeshProUGUI CurrentScoreTextBox;
+    [SerializeField] FadeController MenuVisuals;
+
+    [Header("Dialog selection")]
+    [SerializeField] ChrisDialogButton[] DialogButtons;
+    [SerializeField] FadeController SelectorVisuals;
+
+    [Header("Speaker")]
+    [SerializeField] FadeController SpeakerVisuals;
+    [SerializeField] TextMeshProUGUI SpeechTextBox;
+    [SerializeField] Button SkipButton;
+    float _countdown;
+    bool _isSpeaking;
+
 
     [Header("EndGameScreen")]
     [SerializeField] string ScoreText = "Was Smith took {0} steps to get to you";
     [SerializeField] TextMeshProUGUI ScoreTextBox;
     [SerializeField] FadeController EndScreen;
 
+    DialogItem _currentDialogItem;
+
 
     void Start()
     {
         Assert.IsNotNull(DialogConfig, "Dialog Data not set");
         Assert.IsNotNull(DialogButtons, "DialogButtons not set");
+
+        Assert.IsNotNull(SelectorVisuals);
+
+        Assert.IsNotNull(SpeakerVisuals);
+        Assert.IsNotNull(SpeechTextBox);
+        Assert.IsNotNull(SkipButton);
+
 
         //Setup for advanced button manipulation
         foreach (var chDButton in DialogButtons)
@@ -47,8 +67,27 @@ public class DialogController : MonoBehaviour
         GalaController.OnGameEnded.AddListener(GalaEnded);
         GalaController.OnScoreChanged.AddListener(GalaScoreChanged);
 
+        SkipButton.onClick.AddListener(SkipSpeaker);
+
         ShowDialogues();
         NextQuestion();
+    }
+
+    private void Update()
+    {
+        if (_isSpeaking)
+        {
+            if (_countdown > 0)
+            {
+                _countdown -= Time.deltaTime;
+            }
+            else
+            {
+                _isSpeaking = false;
+                HideDialogues();
+                GalaController.ActivateWill();
+            }
+        }
     }
 
 
@@ -123,6 +162,8 @@ public class DialogController : MonoBehaviour
     {
         Debug.Log("GalaRequestedNextRound");
         ShowDialogues();
+        ShowSelector();
+        HideSpeaker();
         NextQuestion();
     }
     void GalaEnded(int score)
@@ -148,10 +189,39 @@ public class DialogController : MonoBehaviour
         MenuVisuals.DesiredAlpha = 0;
     }
 
+    void ShowSelector()
+    {
+        SelectorVisuals.DesiredAlpha = 1;
+    }
+    void HideSelector()
+    {
+        SelectorVisuals.DesiredAlpha = 0;
+    }
+
+    void ShowSpeaker()
+    {
+        _countdown = _currentDialogItem.Duration;
+        _isSpeaking = true;
+        SpeechTextBox.text = _currentDialogItem.Text;
+        SpeakerVisuals.DesiredAlpha = 1;
+    }
+
+    void HideSpeaker()
+    {
+        SpeakerVisuals.DesiredAlpha = 0;
+    }
+
+    void SkipSpeaker()
+    {
+        _countdown = 0;
+    }
+
     void ButtonClicked(DialogItem item)
     {
-        HideDialogues();
-        GalaController.PlayDialog(item);
+        _currentDialogItem = item;
+        HideSelector();
+        ShowSpeaker();
+        GalaController.SendDialogToGala(_currentDialogItem);
     }
 
     public void ShowScore(int score)

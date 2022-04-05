@@ -16,5 +16,6 @@ public class DialogConfig : ScriptableObject
 public struct DialogItem
 {
     public string Text;
-    public float Value;    
+    public float Value;
+    public float Duration;
 }

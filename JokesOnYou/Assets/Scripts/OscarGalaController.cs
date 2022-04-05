@@ -125,13 +125,16 @@ public class OscarGalaController : MonoBehaviour
     }
     public float distanceToStopSpot;
 
-    public void PlayDialog(DialogItem dialogItem)
+    public void SendDialogToGala(DialogItem dialogItem)
     {
         _currentDialogItem = dialogItem;
 
         ChrisSpeaks();
+    }
 
-        var steps = dialogItem.Value;
+    public void ActivateWill()
+    {
+        var steps = _currentDialogItem.Value;
         var previousMovingForward = _movingForward;
         var currentMovingForward = true;
 
@@ -192,6 +195,7 @@ public class OscarGalaController : MonoBehaviour
         {
             //Game not finished, run next round (show next dialog to choose)
             Debug.Log($"Chris speaks another dialog");
+            SwitchCam(GalaCameras.Wide);
             OnNextRound.Invoke();
         }
     }
@@ -306,6 +310,6 @@ public class OscarGalaController : MonoBehaviour
 
     void ChrisSpeaks()
     {
-        //_currentDialogItem
+        SwitchCam(GalaCameras.ChrisFace);
     }
 }

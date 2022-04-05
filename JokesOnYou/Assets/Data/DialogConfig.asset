@@ -15,16 +15,22 @@ MonoBehaviour:
   Positive:
   - Text: You look nice
     Value: -1
+    Duration: 3
   - Text: I like you
     Value: -1
+    Duration: 3
   Negative:
   - Text: I took a big crap today
     Value: 1
+    Duration: 4
   - Text: Jaba I love you, Gi Jane 2 can't wait to see it, alright?<br>That was a
       nice one!
     Value: 10
+    Duration: 7
   Neutral:
   - Text: The weather is nice huh?
     Value: 0
+    Duration: 4
   - Text: I think I've seen you yesterday in the city bro!
     Value: 0
+    Duration: 5
