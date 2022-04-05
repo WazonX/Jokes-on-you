@@ -820,6 +820,7 @@ GameObject:
   - component: {fileID: 7363723484607737177}
   - component: {fileID: 7239356665471753177}
   - component: {fileID: 6956288588685696752}
+  - component: {fileID: 2952316008486697151}
   m_Layer: 5
   m_Name: GameOverScreen
   m_TagString: Untagged
@@ -897,6 +898,20 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2952316008486697151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5675682190693439430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 320a3c312e65de64d8ca5204a778d960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DesiredAlpha: 1
+  _canvasGroup: {fileID: 6956288588685696752}
 --- !u!1 &6195616159446879079
 GameObject:
   m_ObjectHideFlags: 0
@@ -1434,6 +1449,7 @@ GameObject:
   - component: {fileID: 6255831929290323840}
   - component: {fileID: 6255831929290323843}
   - component: {fileID: 6255831929290323841}
+  - component: {fileID: 3352109161843504745}
   m_Layer: 5
   m_Name: PanelBot
   m_TagString: Untagged
@@ -1512,6 +1528,20 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &3352109161843504745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6255831929290323901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 320a3c312e65de64d8ca5204a778d960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DesiredAlpha: 1
+  _canvasGroup: {fileID: 6255831929290323841}
 --- !u!1 &6255831929394623544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1632,7 +1662,7 @@ MonoBehaviour:
   - {fileID: 4720653036134660110}
   - {fileID: 4720653035536218796}
   GalaController: {fileID: 0}
-  MenuVisuals: {fileID: 6255831929290323841}
+  MenuVisuals: {fileID: 3352109161843504745}
   ChrisSounds: []
   WillSounds: []
   AudioSource: {fileID: 0}

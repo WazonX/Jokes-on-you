@@ -54,6 +54,7 @@ public class OscarGalaController : MonoBehaviour
     //Store last walk animation progress before pause, so we can resume to alternate steps left and right
     public float _lastWalkProgress;
     public bool _movingForward = true;
+    DialogItem _currentDialogItem;
 
 
     #endregion Properties
@@ -124,8 +125,13 @@ public class OscarGalaController : MonoBehaviour
     }
     public float distanceToStopSpot;
 
-    public void PerformSteps(float steps)
+    public void PlayDialog(DialogItem dialogItem)
     {
+        _currentDialogItem = dialogItem;
+
+        ChrisSpeaks();
+
+        var steps = dialogItem.Value;
         var previousMovingForward = _movingForward;
         var currentMovingForward = true;
 
@@ -296,5 +302,10 @@ public class OscarGalaController : MonoBehaviour
                 WillFaceCam.Priority = 1;
                 break;
         }
+    }
+
+    void ChrisSpeaks()
+    {
+        //_currentDialogItem
     }
 }

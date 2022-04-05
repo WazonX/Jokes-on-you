@@ -10,7 +10,7 @@ public class DialogController : MonoBehaviour
     [SerializeField] DialogConfig DialogConfig;
     [SerializeField] ChrisDialogButton[] DialogButtons;
     [SerializeField] OscarGalaController GalaController;
-    [SerializeField] CanvasGroup MenuVisuals;
+    [SerializeField] FadeController MenuVisuals;
     [SerializeField] AudioClip[] ChrisSounds;
     [SerializeField] AudioClip[] WillSounds;
     [SerializeField] AudioSource AudioSource;
@@ -27,7 +27,7 @@ public class DialogController : MonoBehaviour
     [Header("EndGameScreen")]
     [SerializeField] string ScoreText = "Was Smith took {0} steps to get to you";
     [SerializeField] TextMeshProUGUI ScoreTextBox;
-    [SerializeField] CanvasGroup EndScreen;
+    [SerializeField] FadeController EndScreen;
 
 
     void Start()
@@ -121,6 +121,7 @@ public class DialogController : MonoBehaviour
 
     void GalaRequestedNextRound()
     {
+        Debug.Log("GalaRequestedNextRound");
         ShowDialogues();
         NextQuestion();
     }
@@ -138,20 +139,19 @@ public class DialogController : MonoBehaviour
 
     void ShowDialogues()
     {
-        //TODO:fade in
-        MenuVisuals.alpha = 1;   
+        MenuVisuals.DesiredAlpha = 1;   
     }
 
     void HideDialogues()
     {
-        //TODO:fade out
-        MenuVisuals.alpha = 0;
+        Debug.Log($"HideDialogues CurA:{MenuVisuals.CurrentAlpha}");
+        MenuVisuals.DesiredAlpha = 0;
     }
 
     void ButtonClicked(DialogItem item)
     {
         HideDialogues();
-        GalaController.PerformSteps(item.Value);
+        GalaController.PlayDialog(item);
     }
 
     public void ShowScore(int score)
@@ -159,7 +159,7 @@ public class DialogController : MonoBehaviour
         HideDialogues();
         EndScreen.gameObject.SetActive(true);
         ScoreTextBox.text = string.Format(ScoreText, score);
-        EndScreen.alpha = 1;
+        EndScreen.DesiredAlpha = 1;
     }
 
     public void RestartLevel()
