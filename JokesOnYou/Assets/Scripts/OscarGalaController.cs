@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,13 @@ public class OscarGalaController : MonoBehaviour
     //TODO:whats the score? time or points?
     public int Score = 0;
 
+    enum GalaCameras
+    {
+        Wide,
+        ChrisFace,
+        WillFace
+    }
+
 
     //TODO: hook up animation, movement and cameras
     [SerializeField] Animator ChrisAnim;
@@ -20,10 +28,10 @@ public class OscarGalaController : MonoBehaviour
     [SerializeField] Transform ChrisTransform;
     [SerializeField] Transform WillTransform;
 
-    [SerializeField] Camera MainCamera;
-    [SerializeField] Camera WillFaceCamera;
-    [SerializeField] Camera ChrisFaceCamera;
-    [SerializeField] Camera WillBackCamera;
+    [Header("Cameras")]
+    [SerializeField] CinemachineVirtualCamera WideCam;
+    [SerializeField] CinemachineVirtualCamera WillFaceCam;
+    [SerializeField] CinemachineVirtualCamera ChrisFaceCam;
 
     [SerializeField] Transform StartingSpot;
     [SerializeField] Transform StoppingSpot;
@@ -56,6 +64,8 @@ public class OscarGalaController : MonoBehaviour
 
     void Start()
     {
+        SwitchCam(GalaCameras.Wide);
+
         TotalDistance = Vector3.Distance(StartingSpot.position, StoppingSpot.position);
         _willInitialRotation = WillTransform.localRotation;
         Chris.OnHitEnded.AddListener(OnHitEnded);
@@ -192,6 +202,8 @@ public class OscarGalaController : MonoBehaviour
 
     void Walk(float steps)
     {
+        SwitchCam(GalaCameras.WillFace);
+
         if (steps > 0)
         {
             StopTimer = steps * SingleStepDuration;
@@ -214,6 +226,8 @@ public class OscarGalaController : MonoBehaviour
     {
         if (!toggle)
         {
+            SwitchCam(GalaCameras.Wide);
+
             StopTimer = 0;
 
             //save walk animation progress to alternate steps when resumed
@@ -259,5 +273,28 @@ public class OscarGalaController : MonoBehaviour
     void ResetWill_Rotation()
     {
         WillTransform.localRotation = _willInitialRotation; ;
+    }
+
+    void SwitchCam(GalaCameras camera)
+    {
+        switch (camera)
+        {
+            case GalaCameras.Wide:
+            default:
+                WideCam.Priority = 1;
+                ChrisFaceCam.Priority = 0;
+                WillFaceCam.Priority = 0;
+                break;
+            case GalaCameras.ChrisFace:
+                WideCam.Priority = 0;
+                ChrisFaceCam.Priority = 1;
+                WillFaceCam.Priority = 0;
+                break;
+            case GalaCameras.WillFace:
+                WideCam.Priority = 0;
+                ChrisFaceCam.Priority = 0;
+                WillFaceCam.Priority = 1;
+                break;
+        }
     }
 }
