@@ -39,7 +39,7 @@ MonoBehaviour:
     m_To: CM Cam Will
     m_Blend:
       m_Style: 0
-      m_Time: 2
+      m_Time: 0.7
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
