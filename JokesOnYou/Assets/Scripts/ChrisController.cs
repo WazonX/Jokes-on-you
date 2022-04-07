@@ -3,19 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ChrisController : MonoBehaviour
+public class ChrisController : HumanActorController
 {
-    [SerializeField] Animator Anim;
-
-    public UnityEvent OnHitEnded;
-
-    public void GotPunched()
-    {
-        Anim.SetTrigger(AnimationParameters.GotHit);
-    }
-
-    public void MarkHitEnded()
-    {
-        OnHitEnded.Invoke();
-    }
 }

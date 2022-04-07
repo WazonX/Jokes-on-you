@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 public class OscarGalaController : MonoBehaviour
@@ -28,6 +29,12 @@ public class OscarGalaController : MonoBehaviour
     [SerializeField] Transform ChrisTransform;
     [SerializeField] Transform WillTransform;
 
+    [SerializeField] AnimationClip[] TalkingAnimations;
+    List<int> AlreadyUsedTalkChrisAnimsIndex = new List<int>();
+
+    [SerializeField] AnimationClip[] AngryAnimations;
+    List<int> AlreadyUsedAngryWillAnimsIndex = new List<int>();
+
     [Header("Cameras")]
     [SerializeField] CinemachineVirtualCamera WideCam;
     [SerializeField] CinemachineVirtualCamera WillFaceCam;
@@ -37,6 +44,7 @@ public class OscarGalaController : MonoBehaviour
     [SerializeField] Transform StoppingSpot;
 
     [SerializeField] ChrisController Chris;
+    [SerializeField] WillController Will;
 
     //when snapping to postion while animation playing might mess up Will rotation and position we use this to reset
     Quaternion _willInitialRotation;
@@ -65,11 +73,17 @@ public class OscarGalaController : MonoBehaviour
 
     void Start()
     {
+        Assert.IsNotNull(ChrisAnim);
+        Assert.IsNotNull(WillAnim);
+        Assert.IsNotNull(Chris);
+        Assert.IsNotNull(Will);
+
         SwitchCam(GalaCameras.Wide);
 
         TotalDistance = Vector3.Distance(StartingSpot.position, StoppingSpot.position);
         _willInitialRotation = WillTransform.localRotation;
         Chris.OnHitEnded.AddListener(OnHitEnded);
+        Will.OnGestureFinished.AddListener(OnWillGestureFinished);
     }
 
     void Update()
@@ -132,21 +146,55 @@ public class OscarGalaController : MonoBehaviour
         ChrisSpeaks();
     }
 
+    public void ChrisStoppedTalking()
+    {
+        ChrisAnim.SetBool(AnimationParameters.Param_IsTalking, false);
+        ActivateWill();
+    }
+
     public void ActivateWill()
     {
+        SwitchCam(GalaCameras.WillFace);
+
+        //gets angry
+        if (_currentDialogItem.IsNegative)
+        {
+            string animationName;
+            DrawAnimation(ref AlreadyUsedAngryWillAnimsIndex, AngryAnimations, out animationName);
+            WillAnim.Play(animationName, 0);
+        }
+        else if(_currentDialogItem.IsPositive)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
+
+    void OnWillGestureFinished()
+    {
+        Debug.Log("OnWillGestureFinished");
+        PerformWillMovement();
+    }
+
+    void PerformWillMovement()
+    {
+        Debug.Log("PerformWillMovement");
         var steps = _currentDialogItem.Value;
         var previousMovingForward = _movingForward;
         var currentMovingForward = true;
 
         //Will gets angry and move forward
-        if (steps > 0)
+        if (_currentDialogItem.IsNegative)
         {
             Debug.Log($"Will get angry and move forward");
             //TODO: play random angry gesture and move will forward (also manage cameras and face)
             Score += Mathf.FloorToInt(steps);
             OnScoreChanged.Invoke(Score);
         }
-        else if (steps < 0)
+        else if (_currentDialogItem.IsPositive)
         {
             currentMovingForward = false;
             Debug.Log($"Will calms down and backs up");
@@ -202,7 +250,7 @@ public class OscarGalaController : MonoBehaviour
 
     void TriggetPunch()
     {
-        WillAnim.SetTrigger(AnimationParameters.Punch);
+        WillAnim.SetTrigger(AnimationParameters.Trigger_Punch);
     }
 
     void OnHitEnded()
@@ -213,7 +261,6 @@ public class OscarGalaController : MonoBehaviour
     void Walk(float steps)
     {
         SwitchCam(GalaCameras.WillFace);
-
         if (steps > 0)
         {
             StopTimer = steps * SingleStepDuration;
@@ -236,6 +283,8 @@ public class OscarGalaController : MonoBehaviour
     {
         if (!toggle)
         {
+            WillAnim.applyRootMotion = false;
+
             SwitchCam(GalaCameras.Wide);
 
             StopTimer = 0;
@@ -246,23 +295,24 @@ public class OscarGalaController : MonoBehaviour
             _lastWalkProgress = myAnimatorClip[0].clip.length * animationState.normalizedTime;
 
             if (_movingForward)
-                WillAnim.SetBool(AnimationParameters.IsWalking, false);
+                WillAnim.SetBool(AnimationParameters.Param_IsWalking, false);
             else
-                WillAnim.SetBool(AnimationParameters.IsBackingUp, false);
+                WillAnim.SetBool(AnimationParameters.Param_IsBackingUp, false);
 
             ResetWill_Rotation();
         }
         else
         {
+            WillAnim.applyRootMotion = true;
             //resume walk alternating steps
             if (_movingForward)
             {
-                WillAnim.SetBool(AnimationParameters.IsWalking, true);
+                WillAnim.SetBool(AnimationParameters.Param_IsWalking, true);
                 WillAnim.Play(AnimationParameters.Anim_Forward, 0, _lastWalkProgress);
             }
             else
             {
-                WillAnim.SetBool(AnimationParameters.IsBackingUp, true);
+                WillAnim.SetBool(AnimationParameters.Param_IsBackingUp, true);
                 WillAnim.Play(AnimationParameters.Anim_Backward, 0, _lastWalkProgress);
             }
 
@@ -311,5 +361,35 @@ public class OscarGalaController : MonoBehaviour
     void ChrisSpeaks()
     {
         SwitchCam(GalaCameras.ChrisFace);
+
+        ChrisAnim.SetBool(AnimationParameters.Param_IsTalking, true);
+
+        string animName;
+        DrawAnimation(ref AlreadyUsedTalkChrisAnimsIndex, TalkingAnimations, out animName);
+
+        Debug.Log($"Drawed Chris speaking anim:{animName}");
+        ChrisAnim.Play(animName);
+    }
+
+    int DrawAnimation(ref List<int> alreadyDrawed, AnimationClip[] allAnimClipsPool, out string animName)
+    {
+        //Check if all positives already draw and we need to reshuffle dialogues
+        if (alreadyDrawed.Count >= allAnimClipsPool.Length)
+        {
+            //reset memory
+            alreadyDrawed.Clear();
+        }
+
+        int drawedIndex = -1;
+        do
+        {
+            drawedIndex = Random.Range(0, allAnimClipsPool.Length);
+        }
+        while (alreadyDrawed.Contains(drawedIndex));
+        alreadyDrawed.Add(drawedIndex);
+
+        animName = allAnimClipsPool[drawedIndex].name;
+
+        return drawedIndex;
     }
 }

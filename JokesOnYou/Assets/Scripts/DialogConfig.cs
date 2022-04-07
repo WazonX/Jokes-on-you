@@ -18,4 +18,8 @@ public struct DialogItem
     public string Text;
     public float Value;
     public float Duration;
+
+    public bool IsNegative => Value > 0;
+    public bool IsPositive => Value < 0;
+    public bool IsNeutral => Value == 0;
 }

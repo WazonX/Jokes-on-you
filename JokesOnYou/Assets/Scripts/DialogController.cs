@@ -85,7 +85,7 @@ public class DialogController : MonoBehaviour
             {
                 _isSpeaking = false;
                 HideDialogues();
-                GalaController.ActivateWill();
+                GalaController.ChrisStoppedTalking();
             }
         }
     }
