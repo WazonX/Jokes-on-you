@@ -954,11 +954,51 @@ MonoBehaviour:
   ChrisTransform: {fileID: 6934477322695914272}
   WillTransform: {fileID: 6394496068140528692}
   TalkingAnimations:
+  - {fileID: 7400000, guid: 43694a9787adf754b9b528daba384714, type: 2}
+  - {fileID: 7400000, guid: 691f311cd01dfbf4c80ced7ea0fb849d, type: 2}
+  - {fileID: 7400000, guid: fbacc0e1fe87ff842be095d7dcc93ece, type: 2}
+  - {fileID: 7400000, guid: 4bac08ce376371649ae6e524af72c288, type: 2}
+  - {fileID: 7400000, guid: 1e90d212c0571ec4082698d64d151026, type: 2}
   - {fileID: 7400000, guid: 8168d17fe2af86143bbb6c75a9e86f2f, type: 2}
+  - {fileID: 7400000, guid: df0c5bf13d4cb1344a1d71d6a00dd813, type: 2}
+  - {fileID: 7400000, guid: aa2b571c0648efe4095e3108ce91a997, type: 2}
   - {fileID: 7400000, guid: 724dfe78c626aa846b335fbbaf0807d1, type: 2}
   AngryAnimations:
+  - {fileID: 7400000, guid: bc3d46968939652498559920367fe530, type: 2}
   - {fileID: 7400000, guid: ba944944fa0d0334c9a6a9737786be31, type: 2}
+  - {fileID: 7400000, guid: 907df726b6c2be148857d38a95f92a93, type: 2}
+  - {fileID: 7400000, guid: 9ab5dd7bad6e42945a12147bc6b97b84, type: 2}
+  - {fileID: 7400000, guid: 547da653eb8609240946e74573e82b09, type: 2}
+  - {fileID: 7400000, guid: 7023d74efbb46c54da680f0a49fcb9cb, type: 2}
+  - {fileID: 7400000, guid: 598d2178f763a41499ce1428d22b95cd, type: 2}
+  - {fileID: 7400000, guid: 6e94a3c107453364781b66234a397071, type: 2}
+  - {fileID: 7400000, guid: 5848b07452ff55642a40e504cae35d7d, type: 2}
   - {fileID: 7400000, guid: 0dec93a841d905047b8150736f893c6c, type: 2}
+  - {fileID: 7400000, guid: 8a3a8a1c0f4734a408fac4d7de33d65f, type: 2}
+  NeutralAnimations:
+  - {fileID: 7400000, guid: 9e6060f8e5716b4408ada89069883468, type: 2}
+  - {fileID: 7400000, guid: 501c60e3f2602474883c26bad91829e8, type: 2}
+  - {fileID: 7400000, guid: 413030f568d097f4bb4fbd93b1eac684, type: 2}
+  - {fileID: 7400000, guid: 352758d8d7cc289448afddaffcf7a552, type: 2}
+  - {fileID: 7400000, guid: f3bf9a9117514a04abe15edfcc9c7f95, type: 2}
+  - {fileID: 7400000, guid: 03fe4cfa50ec448428e60aeb86ebc784, type: 2}
+  - {fileID: 7400000, guid: a5edcd0a38716484c8dfcd4d69079a6f, type: 2}
+  - {fileID: 7400000, guid: 73b3f7f920b8de14fbbd9b448be85ed2, type: 2}
+  - {fileID: 7400000, guid: 059366e47b3b522419b71a117088d825, type: 2}
+  - {fileID: 7400000, guid: 19337d05b47c00648ad2c2ae2d3f4397, type: 2}
+  - {fileID: 7400000, guid: daccf6cfec978ee4e875a5e6d391d84c, type: 2}
+  PositiveAnimations:
+  - {fileID: 7400000, guid: aeb11316e2163bd4ba0184b6b8163fdf, type: 2}
+  - {fileID: 7400000, guid: 3af98b02c0b30a64eaa2819ed8f99e22, type: 2}
+  - {fileID: 7400000, guid: 45e084c2485689b468de6e4c9b495a7c, type: 2}
+  - {fileID: 7400000, guid: 34d3cd5b25a9a7848b4d0eaf4830ac58, type: 2}
+  - {fileID: 7400000, guid: 741a77e5b76874b40ba1a16804c76dd1, type: 2}
+  - {fileID: 7400000, guid: ee7433d8b6d76484d92f883768061844, type: 2}
+  - {fileID: 7400000, guid: e0797ff391a73fd4eaa6b85e4f0fb5fa, type: 2}
+  - {fileID: 7400000, guid: 6f6806445df46e8418fbbdf8455e89df, type: 2}
+  - {fileID: 7400000, guid: fa84d7e3c6bf8464c80d6867959cf640, type: 2}
+  - {fileID: 7400000, guid: 0ea0bfa65d380154cb27e3dde74bb2d0, type: 2}
+  - {fileID: 7400000, guid: f08cf60bd26743b4bb3f6821c36288a8, type: 2}
   WideCam: {fileID: 1005920078292416674}
   WillFaceCam: {fileID: 3902744798390444462}
   ChrisFaceCam: {fileID: 9190188183458670446}

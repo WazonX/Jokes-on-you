@@ -34,6 +34,10 @@ public class OscarGalaController : MonoBehaviour
 
     [SerializeField] AnimationClip[] AngryAnimations;
     List<int> AlreadyUsedAngryWillAnimsIndex = new List<int>();
+    [SerializeField] AnimationClip[] NeutralAnimations;
+    List<int> AlreadyUsedNeutralWillAnimsIndex = new List<int>();
+    [SerializeField] AnimationClip[] PositiveAnimations;
+    List<int> AlreadyUsedPositiveWillAnimsIndex = new List<int>();
 
     [Header("Cameras")]
     [SerializeField] CinemachineVirtualCamera WideCam;
@@ -156,21 +160,23 @@ public class OscarGalaController : MonoBehaviour
     {
         SwitchCam(GalaCameras.WillFace);
 
+        string animationName;
+
         //gets angry
         if (_currentDialogItem.IsNegative)
         {
-            string animationName;
             DrawAnimation(ref AlreadyUsedAngryWillAnimsIndex, AngryAnimations, out animationName);
-            WillAnim.Play(animationName, 0);
         }
-        else if(_currentDialogItem.IsPositive)
+        else if (_currentDialogItem.IsPositive)
         {
-
+            DrawAnimation(ref AlreadyUsedPositiveWillAnimsIndex, PositiveAnimations, out animationName);
         }
         else
         {
-
+            DrawAnimation(ref AlreadyUsedNeutralWillAnimsIndex, NeutralAnimations, out animationName);
         }
+
+        WillAnim.Play(animationName, 0);
     }
 
     void OnWillGestureFinished()
