@@ -16,21 +16,47 @@ MonoBehaviour:
   - Text: You look nice
     Value: -1
     Duration: 3
-  - Text: I like you
+    EntertainmentValue: 0
+  - Text: Hey, I dig you playing that Williams guy
     Value: -1
     Duration: 3
+    EntertainmentValue: 0
+  - Text: Hey you were great in the Men In Black, though
+    Value: -1
+    Duration: 3
+    EntertainmentValue: 0
+  - Text: Hey are you here to flush my memory?
+    Value: -1
+    Duration: 3
+    EntertainmentValue: 1
   Negative:
-  - Text: I took a big crap today
-    Value: 1
+  - Text: I've heard you like being in the talk shows with your wife
+    Value: 2
     Duration: 4
+    EntertainmentValue: 2
   - Text: Jaba I love you, Gi Jane 2 can't wait to see it, alright?<br>That was a
       nice one!
     Value: 10
     Duration: 7
+    EntertainmentValue: 10
+  - Text: ... whatcha gonna do? Watcha gonna do when they come for wife of you!
+    Value: 3
+    Duration: 7
+    EntertainmentValue: 4
   Neutral:
   - Text: The weather is nice huh?
     Value: 0
     Duration: 4
+    EntertainmentValue: -2
   - Text: I think I've seen you yesterday in the city bro!
     Value: 0
     Duration: 5
+    EntertainmentValue: -1
+  - Text: I took a big crap today
+    Value: 0
+    Duration: 4
+    EntertainmentValue: 1
+  - Text: Thank you Academy for letting me host this great event
+    Value: 0
+    Duration: 7
+    EntertainmentValue: -5

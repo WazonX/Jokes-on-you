@@ -273,6 +273,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1370617351930628357, guid: 5f3fdc83bfdf172428357c1aec851b35, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1370617351930628357, guid: 5f3fdc83bfdf172428357c1aec851b35, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1370617351930628357, guid: 5f3fdc83bfdf172428357c1aec851b35, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1543803668071044329, guid: 5f3fdc83bfdf172428357c1aec851b35, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -669,6 +681,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -33
       objectReference: {fileID: 0}
+    - target: {fileID: 8871793738933864489, guid: 5f3fdc83bfdf172428357c1aec851b35, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8871793738933864489, guid: 5f3fdc83bfdf172428357c1aec851b35, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8871793738933864489, guid: 5f3fdc83bfdf172428357c1aec851b35, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8871793738933864489, guid: 5f3fdc83bfdf172428357c1aec851b35, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f3fdc83bfdf172428357c1aec851b35, type: 3}
 --- !u!1001 &9041026089216332138
@@ -749,6 +777,10 @@ PrefabInstance:
     - target: {fileID: 9041026089793081451, guid: 1af3001ecfe05d94eb2afd28ba032f9b, type: 3}
       propertyPath: WalkSpeed
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041026089793081451, guid: 1af3001ecfe05d94eb2afd28ba032f9b, type: 3}
+      propertyPath: _spotTolerance
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 9041026089793081451, guid: 1af3001ecfe05d94eb2afd28ba032f9b, type: 3}
       propertyPath: DetectionMargin

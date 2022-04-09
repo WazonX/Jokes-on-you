@@ -20,6 +20,14 @@ public class DialogController : MonoBehaviour
     List<int> ButtonIndexAlreadyDrawedThisRound = new List<int>();
     const int ButtonCount = 3;
 
+    [Header("Top panels")]
+    [SerializeField] Image ViewersImage;
+    public const float ViewersMax = 10;
+    float _targetViewerValue = ViewersMax;
+    float _currentViewers = ViewersMax;
+    float _viewersSmoothDuration = 1f;//seconds
+    float _viewersSmoothTime = 0;//current
+    float _ViewersSmoothingErrorThreshold = 0.01f;//current
     [SerializeField] TextMeshProUGUI CurrentScoreTextBox;
     [SerializeField] FadeController MenuVisuals;
 
@@ -47,6 +55,8 @@ public class DialogController : MonoBehaviour
     [SerializeField] string ScoreText = "Was Smith took {0} steps to get to you";
     [SerializeField] TextMeshProUGUI ScoreTextBox;
     [SerializeField] FadeController EndScreen;
+    [SerializeField] string GameOverText = "GameOver because of low viewership at {0} steps";
+    [SerializeField] TextMeshProUGUI GameOverTextBox;
 
     DialogItem _currentDialogItem;
 
@@ -57,6 +67,8 @@ public class DialogController : MonoBehaviour
         Assert.IsNotNull(DialogButtons, "DialogButtons not set");
 
         Assert.IsNotNull(SelectorVisuals);
+
+        Assert.IsNotNull(ViewersImage);
 
         Assert.IsNotNull(SpeakerVisuals);
         Assert.IsNotNull(SpeechTextBox);
@@ -78,7 +90,9 @@ public class DialogController : MonoBehaviour
         //Hook to Gala Controller Events
         GalaController.OnNextRound.AddListener(GalaRequestedNextRound);
         GalaController.OnGameEnded.AddListener(GalaEnded);
+        GalaController.OnGameFailed.AddListener(GalaFailed);
         GalaController.OnScoreChanged.AddListener(GalaScoreChanged);
+        GalaController.OnViewersChanged.AddListener(GalaViewersChanged);
 
         SkipButton.onClick.AddListener(SkipSpeaker);
 
@@ -112,7 +126,7 @@ public class DialogController : MonoBehaviour
             if (_timeCounter <= 0)
             {
                 //Select random dialog
-                var button = DialogButtons[Random.Range(0,DialogButtons.Length)];
+                var button = DialogButtons[Random.Range(0, DialogButtons.Length)];
                 button.AdvancedClick.Invoke(button.Data);
             }
 
@@ -122,11 +136,45 @@ public class DialogController : MonoBehaviour
             _timeCounter = 0;
         }
 
+        SmoothViewers();
+    }
+
+    void SmoothViewers()
+    {
+        //Debug.Log($"SmoothViewers Cur:{_currentViewers} Tar:{_targetViewerValue}");
+        if (_currentViewers != _targetViewerValue)
+        {
+            var distance = Mathf.Abs(_targetViewerValue - _currentViewers);
+
+            float lerpedCurrent = Mathf.Lerp(_currentViewers, _targetViewerValue, _viewersSmoothTime / _viewersSmoothDuration);;
+                _viewersSmoothTime += Time.deltaTime;
+
+            if (_targetViewerValue > _currentViewers)
+            {
+                //Debug.Log($"Raising: {lerpedCurrent}");
+            }
+            else if (_targetViewerValue < _currentViewers)
+            {
+                //Debug.Log($"Falling: {lerpedCurrent}");
+            }
+
+            _currentViewers = lerpedCurrent;
+
+            if (Mathf.Abs(_targetViewerValue - _currentViewers) <= _ViewersSmoothingErrorThreshold)
+            {
+                Debug.Log("Viewers reached");
+                _currentViewers = _targetViewerValue;
+            }
+
+            ViewersImage.fillAmount = _currentViewers / ViewersMax;
+            Debug.Log($"Viewers: {_currentViewers} / {ViewersMax} = {ViewersImage.fillAmount}");
+        }
     }
 
 
     public void NextQuestion()
     {
+        SetDialogButtonsActive(true);
         ButtonIndexAlreadyDrawedThisRound.Clear();
 
         //DrawPositive
@@ -225,14 +273,29 @@ public class DialogController : MonoBehaviour
         //TODO:Show score and button to restart game
         ShowScore(score);
     }
+    void GalaFailed(int score)
+    {
+        HideDialogues();
+
+        //TODO:Show score and button to restart game
+        ShowScore2(score);
+        Debug.Log("Gala failed");
+    }
     void GalaScoreChanged(int score)
     {
         CurrentScoreTextBox.text = score.ToString();
     }
+    void GalaViewersChanged(float viewers)
+    {
+
+        _viewersSmoothTime = 0;
+        _targetViewerValue = viewers;
+        Debug.Log($"GalaViewersChanged Cur:{_currentViewers} Tar:{_targetViewerValue}");
+    }
 
     void ShowDialogues()
     {
-        MenuVisuals.DesiredAlpha = 1;   
+        MenuVisuals.DesiredAlpha = 1;
     }
 
     void HideDialogues()
@@ -270,11 +333,20 @@ public class DialogController : MonoBehaviour
 
     void ButtonClicked(DialogItem item)
     {
+        SetDialogButtonsActive(false);
         DisableTimer();
         _currentDialogItem = item;
         HideSelector();
         ShowSpeaker();
         GalaController.SendDialogToGala(_currentDialogItem);
+    }
+
+    void SetDialogButtonsActive(bool active)
+    {
+        foreach(var b in DialogButtons)
+        {
+            b.gameObject.SetActive(active);
+        }
     }
 
     public void ShowScore(int score)
@@ -283,6 +355,13 @@ public class DialogController : MonoBehaviour
         EndScreen.gameObject.SetActive(true);
         ScoreTextBox.text = string.Format(ScoreText, score);
         EndScreen.DesiredAlpha = 1;
+    }
+    public void ShowScore2(int score)
+    {
+        ScoreTextBox.gameObject.SetActive(false);
+        GameOverTextBox.text = string.Format(GameOverText, score);
+        ShowScore(score);
+        GameOverTextBox.gameObject.SetActive(true);
     }
 
     public void RestartLevel()

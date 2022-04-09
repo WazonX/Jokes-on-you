@@ -14,6 +14,7 @@ public class OscarGalaController : MonoBehaviour
 
     //TODO:whats the score? time or points?
     public int Score = 0;
+    public float Viewers = DialogController.ViewersMax;
 
     enum GalaCameras
     {
@@ -73,7 +74,9 @@ public class OscarGalaController : MonoBehaviour
 
     public UnityEvent OnNextRound;
     public UnityEvent<int> OnGameEnded;
+    public UnityEvent<int> OnGameFailed;
     public UnityEvent<int> OnScoreChanged;
+    public UnityEvent<float> OnViewersChanged;
 
     void Start()
     {
@@ -131,7 +134,7 @@ public class OscarGalaController : MonoBehaviour
 
                 StopTimer -= Time.deltaTime;
 
-                Debug.Log($"Update StopTimer:{StopTimer}");
+                //Debug.Log($"Update StopTimer:{StopTimer}");
             }
             else
             {
@@ -187,26 +190,27 @@ public class OscarGalaController : MonoBehaviour
 
     void PerformWillMovement()
     {
-        Debug.Log("PerformWillMovement");
+        Debug.Log($"PerformWillMovement and apply points Steps:{_currentDialogItem.Value} dView:{_currentDialogItem.EntertainmentValue} CurV:{Viewers}");
         var steps = _currentDialogItem.Value;
+        var viewersDelta = _currentDialogItem.EntertainmentValue;
         var previousMovingForward = _movingForward;
         var currentMovingForward = true;
+
+        var scoreDelta = 0;
 
         //Will gets angry and move forward
         if (_currentDialogItem.IsNegative)
         {
             Debug.Log($"Will get angry and move forward");
             //TODO: play random angry gesture and move will forward (also manage cameras and face)
-            Score += Mathf.FloorToInt(steps);
-            OnScoreChanged.Invoke(Score);
+            scoreDelta = Mathf.FloorToInt(steps);
         }
         else if (_currentDialogItem.IsPositive)
         {
             currentMovingForward = false;
-            Score += Mathf.FloorToInt(steps);
-            OnScoreChanged.Invoke(Score);
             Debug.Log($"Will calms down and backs up");
             //TODO: play random peacfull gesture and move will back to his seat (also manage cameras and face)
+            scoreDelta = Mathf.Abs(Mathf.FloorToInt(steps));
         }
         else
         {
@@ -217,6 +221,32 @@ public class OscarGalaController : MonoBehaviour
         if (currentMovingForward != previousMovingForward)
             _lastWalkProgress = 0;
         _movingForward = currentMovingForward;
+
+
+        if (scoreDelta != 0)
+        {
+            if (_currentDialogItem.IsNegative)
+            {
+                Score += scoreDelta;
+                OnScoreChanged.Invoke(Score);
+            }
+            else if (_currentDialogItem.IsPositive)
+            {
+                //Already at start position
+                if (IsWillAroundPosition(StartingSpot.position) && !_movingForward)
+                {
+
+                }
+                else
+                {
+                    Score += scoreDelta;
+                    OnScoreChanged.Invoke(Score);
+                }
+            }
+        }
+
+        UpdateViewers(viewersDelta);
+
 
         //TODO: gesture
 
@@ -237,6 +267,19 @@ public class OscarGalaController : MonoBehaviour
         }
 
         Walk(steps);
+    }
+
+    void UpdateViewers(float delta)
+    {
+        Viewers += Mathf.FloorToInt(delta);
+        Viewers = Mathf.Clamp(Viewers, 0, DialogController.ViewersMax);
+        Debug.Log($"Gala invoking UpdateViewers {Viewers}");
+        if (Viewers <= 0)
+        {
+            OnGameFailed.Invoke(Score);
+            return;
+        }
+        OnViewersChanged.Invoke(Viewers);
     }
 
     void CheckGameConditions()
