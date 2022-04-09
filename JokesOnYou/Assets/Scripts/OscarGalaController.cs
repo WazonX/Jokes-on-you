@@ -203,6 +203,8 @@ public class OscarGalaController : MonoBehaviour
         else if (_currentDialogItem.IsPositive)
         {
             currentMovingForward = false;
+            Score += Mathf.FloorToInt(steps);
+            OnScoreChanged.Invoke(Score);
             Debug.Log($"Will calms down and backs up");
             //TODO: play random peacfull gesture and move will back to his seat (also manage cameras and face)
         }
@@ -309,6 +311,7 @@ public class OscarGalaController : MonoBehaviour
         }
         else
         {
+            ResetWill_Rotation();
             WillAnim.applyRootMotion = true;
             //resume walk alternating steps
             if (_movingForward)

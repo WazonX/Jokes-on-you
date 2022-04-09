@@ -34,6 +34,14 @@ public class DialogController : MonoBehaviour
     float _countdown;
     bool _isSpeaking;
 
+    [Header("Time")]
+    [SerializeField] float _timeLimit = 5;
+    [SerializeField] TextMeshProUGUI TimeLeftTextBox;
+    [SerializeField] Image TimeLeftImage;
+    [SerializeField] CanvasGroup TimeUI;
+    float _timeCounter;
+    bool _timerEnabled = false;
+
 
     [Header("EndGameScreen")]
     [SerializeField] string ScoreText = "Was Smith took {0} steps to get to you";
@@ -53,6 +61,11 @@ public class DialogController : MonoBehaviour
         Assert.IsNotNull(SpeakerVisuals);
         Assert.IsNotNull(SpeechTextBox);
         Assert.IsNotNull(SkipButton);
+
+        Assert.IsNotNull(TimeLeftTextBox);
+        Assert.IsNotNull(TimeLeftImage);
+        Assert.IsNotNull(TimeUI);
+
 
 
         //Setup for advanced button manipulation
@@ -88,6 +101,27 @@ public class DialogController : MonoBehaviour
                 GalaController.ChrisStoppedTalking();
             }
         }
+
+        if (_timerEnabled && _timeCounter > 0)
+        {
+
+            _timeCounter -= Time.deltaTime;
+            UpdateTimeUI();
+
+
+            if (_timeCounter <= 0)
+            {
+                //Select random dialog
+                var button = DialogButtons[Random.Range(0,DialogButtons.Length)];
+                button.AdvancedClick.Invoke(button.Data);
+            }
+
+        }
+        else
+        {
+            _timeCounter = 0;
+        }
+
     }
 
 
@@ -114,6 +148,24 @@ public class DialogController : MonoBehaviour
         neutralButton.SetDialog(drawedNeutralData);
 
         ButtonIndexAlreadyDrawedThisRound.Clear();
+
+        _timeCounter = _timeLimit;
+        _timerEnabled = true;
+        UpdateTimeUI();
+    }
+
+    void UpdateTimeUI()
+    {
+        if (_timerEnabled && _timeCounter > 0)
+        {
+            TimeUI.alpha = 1;
+            TimeLeftTextBox.text = Mathf.CeilToInt(_timeCounter).ToString();
+            TimeLeftImage.fillAmount = _timeCounter / _timeLimit;
+        }
+        else
+        {
+            TimeUI.alpha = 0;
+        }
     }
 
     int Draw(ref List<int> alreadyDrawed, DialogItem[] allDialoguePool, out DialogItem item)
@@ -218,6 +270,7 @@ public class DialogController : MonoBehaviour
 
     void ButtonClicked(DialogItem item)
     {
+        DisableTimer();
         _currentDialogItem = item;
         HideSelector();
         ShowSpeaker();
@@ -240,6 +293,13 @@ public class DialogController : MonoBehaviour
     public void BackToMenu()
     {
         SceneManager.LoadScene(0);
+    }
+
+    void DisableTimer()
+    {
+        _timerEnabled = false;
+        _timeCounter = 0;
+        TimeUI.alpha = 0;
     }
 
 
