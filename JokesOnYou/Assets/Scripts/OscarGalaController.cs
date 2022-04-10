@@ -69,6 +69,9 @@ public class OscarGalaController : MonoBehaviour
     public bool _movingForward = true;
     DialogItem _currentDialogItem;
 
+    [Header("Audience")]
+    [SerializeField] AudienceController _audience;
+
 
     #endregion Properties
 
@@ -159,6 +162,9 @@ public class OscarGalaController : MonoBehaviour
         Chris.SwapFacialTexture(HumanActorController.FacialExpression.Neutral);
 
         ActivateWill();
+
+
+        _audience.PlaySound(_currentDialogItem.EntertainmentValue);
     }
 
     public void ActivateWill()

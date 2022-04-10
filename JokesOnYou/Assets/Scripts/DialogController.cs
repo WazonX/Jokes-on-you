@@ -162,12 +162,12 @@ public class DialogController : MonoBehaviour
 
             if (Mathf.Abs(_targetViewerValue - _currentViewers) <= _ViewersSmoothingErrorThreshold)
             {
-                Debug.Log("Viewers reached");
+                //Debug.Log("Viewers reached");
                 _currentViewers = _targetViewerValue;
             }
 
             ViewersImage.fillAmount = _currentViewers / ViewersMax;
-            Debug.Log($"Viewers: {_currentViewers} / {ViewersMax} = {ViewersImage.fillAmount}");
+            //Debug.Log($"Viewers: {_currentViewers} / {ViewersMax} = {ViewersImage.fillAmount}");
         }
     }
 

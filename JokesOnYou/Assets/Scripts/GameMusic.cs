@@ -31,7 +31,7 @@ public class GameMusic : MonoBehaviour
     [SerializeField] AudioMixer mixer;
     [SerializeField] internal AudioClip DefaultClick;
 
-    internal MusicType currentMusicType = MusicType.Default;
+    internal MusicType currentMusicType = MusicType.Stopped;
 
     bool isMute = false;
 
