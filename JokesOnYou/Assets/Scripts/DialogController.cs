@@ -102,9 +102,20 @@ public class DialogController : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            GoToMainMenu();
+        }
+
+
         if (_isSpeaking)
         {
-            if (_countdown > 0)
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SkipSpeaker();
+            }
+
+                if (_countdown > 0)
             {
                 _countdown -= Time.deltaTime;
             }
@@ -137,6 +148,25 @@ public class DialogController : MonoBehaviour
         }
 
         SmoothViewers();
+
+        if (_dialogButtonsActive)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                var button = DialogButtons[0];
+                button.AdvancedClick.Invoke(button.Data);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                var button = DialogButtons[1];
+                button.AdvancedClick.Invoke(button.Data);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                var button = DialogButtons[2];
+                button.AdvancedClick.Invoke(button.Data);
+            }
+        }
     }
 
     void SmoothViewers()
@@ -146,8 +176,8 @@ public class DialogController : MonoBehaviour
         {
             var distance = Mathf.Abs(_targetViewerValue - _currentViewers);
 
-            float lerpedCurrent = Mathf.Lerp(_currentViewers, _targetViewerValue, _viewersSmoothTime / _viewersSmoothDuration);;
-                _viewersSmoothTime += Time.deltaTime;
+            float lerpedCurrent = Mathf.Lerp(_currentViewers, _targetViewerValue, _viewersSmoothTime / _viewersSmoothDuration); ;
+            _viewersSmoothTime += Time.deltaTime;
 
             if (_targetViewerValue > _currentViewers)
             {
@@ -340,10 +370,11 @@ public class DialogController : MonoBehaviour
         ShowSpeaker();
         GalaController.SendDialogToGala(_currentDialogItem);
     }
-
+    bool _dialogButtonsActive = true;
     void SetDialogButtonsActive(bool active)
     {
-        foreach(var b in DialogButtons)
+        _dialogButtonsActive = active;
+        foreach (var b in DialogButtons)
         {
             b.gameObject.SetActive(active);
         }
@@ -379,6 +410,11 @@ public class DialogController : MonoBehaviour
         _timerEnabled = false;
         _timeCounter = 0;
         TimeUI.alpha = 0;
+    }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
 
