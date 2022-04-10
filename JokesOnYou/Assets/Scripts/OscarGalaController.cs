@@ -156,6 +156,8 @@ public class OscarGalaController : MonoBehaviour
     public void ChrisStoppedTalking()
     {
         ChrisAnim.SetBool(AnimationParameters.Param_IsTalking, false);
+        Chris.SwapFacialTexture(HumanActorController.FacialExpression.Neutral);
+
         ActivateWill();
     }
 
@@ -169,14 +171,17 @@ public class OscarGalaController : MonoBehaviour
         if (_currentDialogItem.IsNegative)
         {
             DrawAnimation(ref AlreadyUsedAngryWillAnimsIndex, AngryAnimations, out animationName);
+            Will.SwapFacialTexture(HumanActorController.FacialExpression.Angry);
         }
         else if (_currentDialogItem.IsPositive)
         {
             DrawAnimation(ref AlreadyUsedPositiveWillAnimsIndex, PositiveAnimations, out animationName);
+            Will.SwapFacialTexture(HumanActorController.FacialExpression.Happy);
         }
         else
         {
             DrawAnimation(ref AlreadyUsedNeutralWillAnimsIndex, NeutralAnimations, out animationName);
+            Will.SwapFacialTexture(HumanActorController.FacialExpression.Neutral);
         }
 
         WillAnim.Play(animationName, 0);
@@ -287,11 +292,13 @@ public class OscarGalaController : MonoBehaviour
         //TODO:on animation played
         if (CurrentProgress >= MaxProgress - _progressTolerance || WillTransform.position.z < StoppingSpot.position.z)
         {
+            Will.SwapFacialTexture(HumanActorController.FacialExpression.Angry);
             TriggetPunch();
             Debug.Log($"Will reached the target. Current score {Score}.");
         }
         else
         {
+            Will.SwapFacialTexture(HumanActorController.FacialExpression.Neutral);
             //Game not finished, run next round (show next dialog to choose)
             Debug.Log($"Chris speaks another dialog");
             SwitchCam(GalaCameras.Wide);
@@ -421,6 +428,7 @@ public class OscarGalaController : MonoBehaviour
 
         Debug.Log($"Drawed Chris speaking anim:{animName}");
         ChrisAnim.Play(animName);
+        Chris.SwapFacialTexture(HumanActorController.FacialExpression.Talking);
     }
 
     int DrawAnimation(ref List<int> alreadyDrawed, AnimationClip[] allAnimClipsPool, out string animName)

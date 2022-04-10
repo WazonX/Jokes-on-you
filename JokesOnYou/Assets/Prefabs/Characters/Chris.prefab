@@ -1333,7 +1333,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 3729558831976134206}
+  _mesh: {fileID: 7228792463437024040}
+  _talkingTex: {fileID: 2800000, guid: b65c7d1571dea2f4ab52f823b5ded624, type: 3}
+  _neutralTex: {fileID: 2800000, guid: 0f94738bb637cb841affa6659bb067a3, type: 3}
+  _angryTex: {fileID: 0}
+  _happyTex: {fileID: 0}
   OnHitEnded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGestureFinished:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &8087876766714592322

@@ -962,7 +962,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 179220832371072672}
+  _mesh: {fileID: 6192275664925041590}
+  _talkingTex: {fileID: 0}
+  _neutralTex: {fileID: 2800000, guid: cf4053a351bc88649b95441b3d59a737, type: 3}
+  _angryTex: {fileID: 2800000, guid: e6d88cdaaa2944d4499f735a4433df88, type: 3}
+  _happyTex: {fileID: 2800000, guid: af8c184d532a6e04b92831b91f5a5bad, type: 3}
   OnHitEnded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGestureFinished:
     m_PersistentCalls:
       m_Calls: []
   Chris: {fileID: 0}
