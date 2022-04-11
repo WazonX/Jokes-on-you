@@ -142,17 +142,34 @@ public class GameMusic : MonoBehaviour
         //TODO:changed music type based on scene
     }
 
+    public void SetSoundParameter(string parameter, float value)
+    {
+        Debug.Log($"SetSoundParameter: {parameter} Val:{value}");
+        if (parameter == MixerParameters.SFXVolume)
+        {
+            SetSfxVolume(value);
+            return;
+        }
+        if (parameter == MixerParameters.MusicVolume)
+        {
+            SetMusicVolume(value);
+            return;
+        }
+    }
 
     public void SetMusicVolume(float musicVolume)
     {
         mixer.SetFloat(MixerParameters.MusicVolume, musicVolume);
         PlayerPrefs.SetFloat(MixerParameters.MusicVolume, musicVolume);
         PlayerPrefs.Save();
+
+        Debug.Log($"SetMusicVolume:Vol:{musicVolume}");
     }
     public void SetSfxVolume(float sfxVolume)
     {
         mixer.SetFloat(MixerParameters.SFXVolume, sfxVolume);
         PlayerPrefs.SetFloat(MixerParameters.SFXVolume, sfxVolume);
         PlayerPrefs.Save();
+        Debug.Log($"SetSfxVolume:Vol:{sfxVolume}");
     }
 }

@@ -51,6 +51,8 @@ public class OscarGalaController : MonoBehaviour
     [SerializeField] ChrisController Chris;
     [SerializeField] WillController Will;
 
+    [SerializeField] AudioClip _hitSound;
+
     //when snapping to postion while animation playing might mess up Will rotation and position we use this to reset
     Quaternion _willInitialRotation;
 
@@ -92,7 +94,10 @@ public class OscarGalaController : MonoBehaviour
 
         TotalDistance = Vector3.Distance(StartingSpot.position, StoppingSpot.position);
         _willInitialRotation = WillTransform.localRotation;
+
+        Chris.OnHitLanded.AddListener(OnHitLanded);
         Chris.OnHitEnded.AddListener(OnHitEnded);
+
         Will.OnGestureFinished.AddListener(OnWillGestureFinished);
     }
 
@@ -317,6 +322,13 @@ public class OscarGalaController : MonoBehaviour
         WillAnim.SetTrigger(AnimationParameters.Trigger_Punch);
     }
 
+    void OnHitLanded()
+    {
+        if (GameMusic.instance != null)
+        {
+            GameMusic.instance.PlaySFX(_hitSound);
+        }
+    }
     void OnHitEnded()
     {
         OnGameEnded.Invoke(Score);

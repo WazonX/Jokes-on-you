@@ -25,6 +25,7 @@ public abstract class HumanActorController : MonoBehaviour
     public Texture AngryTex => _angryTex;
     public Texture HappyTex => _happyTex;
 
+    public UnityEvent OnHitLanded;
     public UnityEvent OnHitEnded;
     public UnityEvent OnGestureFinished;
 
@@ -34,6 +35,7 @@ public abstract class HumanActorController : MonoBehaviour
     public void GotPunched()
     {
         _animator.SetTrigger(AnimationParameters.Trigger_GotHit);
+        OnHitLanded.Invoke();
     }
 
     public void MarkHitEnded()

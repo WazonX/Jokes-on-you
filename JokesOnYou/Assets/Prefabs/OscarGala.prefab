@@ -1247,6 +1247,7 @@ MonoBehaviour:
   StoppingSpot: {fileID: 6605135985782466618}
   Chris: {fileID: 2029916848094166338}
   Will: {fileID: 5514262750327593348}
+  _hitSound: {fileID: 8300000, guid: 68988b8d09b0a2e4db0528806f81edcd, type: 3}
   TotalDistance: 0
   IsWalking: 0
   SingleStepDuration: 0.515
