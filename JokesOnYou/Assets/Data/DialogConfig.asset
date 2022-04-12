@@ -87,7 +87,7 @@ MonoBehaviour:
     Value: 4
     Duration: 5
     EntertainmentValue: 3
-  - Text: What to you call a gameobject in Unreal Engine?An actor!
+  - Text: What do you call a GameObject in Unreal Engine?An actor!
     Value: 1
     Duration: 7
     EntertainmentValue: -1
@@ -148,7 +148,7 @@ MonoBehaviour:
     Value: 0
     Duration: 6
     EntertainmentValue: -2
-  - Text: Hey security take this guy off the scene! Naah just kiddin
+  - Text: Hey security take this guy off the stage! Naah just kiddin
     Value: 0
     Duration: 6
     EntertainmentValue: -1
