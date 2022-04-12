@@ -40,6 +40,15 @@ public class OscarGalaController : MonoBehaviour
     [SerializeField] AnimationClip[] PositiveAnimations;
     List<int> AlreadyUsedPositiveWillAnimsIndex = new List<int>();
 
+
+    [SerializeField] AudioSource ChrisAudioSource;
+    [SerializeField] AudioClip[] ChrisSpeakShortSFX;
+    [SerializeField] AudioClip[] ChrisSpeakLongSFX;
+    [SerializeField] AudioSource WillAudioSource;
+    [SerializeField] AudioClip[] WillAngrySFX;
+    [SerializeField] AudioClip[] WillHappySFX;
+    [SerializeField] AudioClip[] WillNeutralSFX;
+
     [Header("Cameras")]
     [SerializeField] CinemachineVirtualCamera WideCam;
     [SerializeField] CinemachineVirtualCamera WillFaceCam;
@@ -163,6 +172,8 @@ public class OscarGalaController : MonoBehaviour
 
     public void ChrisStoppedTalking()
     {
+        ChrisAudioSource.Stop();
+
         ChrisAnim.SetBool(AnimationParameters.Param_IsTalking, false);
         Chris.SwapFacialTexture(HumanActorController.FacialExpression.Neutral);
 
@@ -177,6 +188,7 @@ public class OscarGalaController : MonoBehaviour
         SwitchCam(GalaCameras.WillFace);
 
         string animationName;
+
 
         //gets angry
         if (_currentDialogItem.IsNegative)
@@ -196,6 +208,30 @@ public class OscarGalaController : MonoBehaviour
         }
 
         WillAnim.Play(animationName, 0);
+
+
+        AudioClip willAudioClip = GetWillAudioClip();
+        if (willAudioClip != null)
+        {
+            WillAudioSource.clip = willAudioClip;
+            WillAudioSource.Play();
+        }
+    }
+
+    AudioClip GetWillAudioClip()
+    {
+        if (_currentDialogItem.IsPositive)
+        {
+            return WillHappySFX[Random.Range(0, WillHappySFX.Length)];
+        }
+        else if(_currentDialogItem.IsNegative)
+        {
+            return WillAngrySFX[Random.Range(0, WillAngrySFX.Length)];
+        }
+        else
+        {
+            return WillNeutralSFX[Random.Range(0, WillNeutralSFX.Length)];
+        }
     }
 
     void OnWillGestureFinished()
@@ -300,6 +336,8 @@ public class OscarGalaController : MonoBehaviour
 
     void CheckGameConditions()
     {
+        WillAudioSource.Stop();
+
         //TODO:on animation played
         if (CurrentProgress >= MaxProgress - _progressTolerance || WillTransform.position.z < StoppingSpot.position.z)
         {
@@ -313,6 +351,7 @@ public class OscarGalaController : MonoBehaviour
             //Game not finished, run next round (show next dialog to choose)
             Debug.Log($"Chris speaks another dialog");
             SwitchCam(GalaCameras.Wide);
+
             OnNextRound.Invoke();
         }
     }
@@ -447,6 +486,25 @@ public class OscarGalaController : MonoBehaviour
         Debug.Log($"Drawed Chris speaking anim:{animName}");
         ChrisAnim.Play(animName);
         Chris.SwapFacialTexture(HumanActorController.FacialExpression.Talking);
+
+        //Play chris sound
+        var clip = GetChrisAudioClip(_currentDialogItem.Duration <= 4);
+        ChrisAudioSource.Stop();
+        ChrisAudioSource.clip = clip;
+        ChrisAudioSource.Play();
+
+    }
+
+    AudioClip GetChrisAudioClip(bool isShort)
+    {
+        if(isShort)
+        {
+            return ChrisSpeakShortSFX[Random.Range(0, ChrisSpeakShortSFX.Length)];
+        }
+        else
+        {
+            return ChrisSpeakShortSFX[Random.Range(0, ChrisSpeakLongSFX.Length)];
+        }
     }
 
     int DrawAnimation(ref List<int> alreadyDrawed, AnimationClip[] allAnimClipsPool, out string animName)
