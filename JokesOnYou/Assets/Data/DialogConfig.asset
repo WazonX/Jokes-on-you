@@ -29,6 +29,42 @@ MonoBehaviour:
     Value: -1
     Duration: 3
     EntertainmentValue: 1
+  - Text: You know  what? F**k it!
+    Value: -1
+    Duration: 3
+    EntertainmentValue: 1
+  - Text: I'm sorry man, you are great
+    Value: -1
+    Duration: 4
+    EntertainmentValue: 1
+  - Text: Are you guys excited for upcoming Ludum Dare?
+    Value: -2
+    Duration: 6
+    EntertainmentValue: -3
+  - Text: If you do anything I'm gonna sue you boy
+    Value: -2
+    Duration: 6
+    EntertainmentValue: 1
+  - Text: Wes, Sorry for this whole situation with your marriage
+    Value: -1
+    Duration: 7
+    EntertainmentValue: -1
+  - Text: I know a surgeon and I could get you a deal for those ears
+    Value: -1
+    Duration: 7
+    EntertainmentValue: -1
+  - Text: We all did some stupid ass things, right?
+    Value: -1
+    Duration: 5
+    EntertainmentValue: -1
+  - Text: Whasaaaaap!?
+    Value: -1
+    Duration: 2
+    EntertainmentValue: -2
+  - Text: "I don\u2019t feel so good"
+    Value: -1
+    Duration: 4
+    EntertainmentValue: -1
   Negative:
   - Text: I've heard you like being in the talk shows with your wife
     Value: 2
@@ -43,6 +79,42 @@ MonoBehaviour:
     Value: 3
     Duration: 7
     EntertainmentValue: 4
+  - Text: Hey hows children, still hate you?
+    Value: 2
+    Duration: 5
+    EntertainmentValue: -1
+  - Text: Bad boys, hey Was isn't that whats your wife like?
+    Value: 4
+    Duration: 5
+    EntertainmentValue: 3
+  - Text: What to you call a gameobject in Unreal Engine?An actor!
+    Value: 1
+    Duration: 7
+    EntertainmentValue: -1
+  - Text: Don't you guys hate it when those stupid actors are staring at you?
+    Value: 1
+    Duration: 7
+    EntertainmentValue: -1
+  - Text: Do you hang out with your son's friends? Like your wife?
+    Value: 2
+    Duration: 6
+    EntertainmentValue: 2
+  - Text: Someone's in a really dark place right now, huh Hancock?
+    Value: 3
+    Duration: 4
+    EntertainmentValue: 3
+  - Text: Hey Wes, you are so damn ugly, man!
+    Value: 1
+    Duration: 3
+    EntertainmentValue: -2
+  - Text: Your momma is so fat she could fit in this place
+    Value: 1
+    Duration: 5
+    EntertainmentValue: -3
+  - Text: Hey Wes is Jaba getting jiggy with it?
+    Value: 1
+    Duration: 5
+    EntertainmentValue: 1
   Neutral:
   - Text: The weather is nice huh?
     Value: 0
@@ -60,3 +132,39 @@ MonoBehaviour:
     Value: 0
     Duration: 7
     EntertainmentValue: -5
+  - Text: Wow, you all dressed up fancy
+    Value: 0
+    Duration: 4
+    EntertainmentValue: -1
+  - Text: If you want something very badly, just keep on workin
+    Value: 0
+    Duration: 7
+    EntertainmentValue: -1
+  - Text: Dua Lipa is hot, right?
+    Value: 0
+    Duration: 3
+    EntertainmentValue: 2
+  - Text: Too bad Trump didn't got nominated for HomeAlone 2
+    Value: 0
+    Duration: 6
+    EntertainmentValue: -2
+  - Text: Hey security take this guy off the scene! Naah just kiddin
+    Value: 0
+    Duration: 6
+    EntertainmentValue: -1
+  - Text: Welcome to the 94th award ceremony!
+    Value: 0
+    Duration: 4
+    EntertainmentValue: -1
+  - Text: Hey my next standup show is going to be released next month
+    Value: 0
+    Duration: 7
+    EntertainmentValue: -1
+  - Text: You guys know I am good friend with Kevin Heart?
+    Value: 0
+    Duration: 6
+    EntertainmentValue: -2
+  - Text: "And the award goes to\u2026"
+    Value: 0
+    Duration: 4
+    EntertainmentValue: 0
